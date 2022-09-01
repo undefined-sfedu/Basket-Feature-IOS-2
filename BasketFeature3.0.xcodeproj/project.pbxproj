@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F38695A728C1139600480D59 /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38695A528C1139600480D59 /* TextFieldTableViewCell.swift */; };
 		F392264428BF29C6006D492C /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F392264328BF29C6006D492C /* CustomTextField.swift */; };
 		F392264728BF382F006D492C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F392264628BF382F006D492C /* Extensions.swift */; };
 		F3A0EC2E28BE0E1100805B88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A0EC2D28BE0E1100805B88 /* AppDelegate.swift */; };
@@ -17,6 +18,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F38695A528C1139600480D59 /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
 		F392264328BF29C6006D492C /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		F392264628BF382F006D492C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F3A0EC2A28BE0E1100805B88 /* BasketFeature3.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasketFeature3.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -39,6 +41,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		F38695A928C11F0E00480D59 /* RegisterView */ = {
+			isa = PBXGroup;
+			children = (
+				F3A0EC3128BE0E1100805B88 /* RegisterView.swift */,
+				F38695AA28C11F1A00480D59 /* Cells */,
+			);
+			path = RegisterView;
+			sourceTree = "<group>";
+		};
+		F38695AA28C11F1A00480D59 /* Cells */ = {
+			isa = PBXGroup;
+			children = (
+				F38695A528C1139600480D59 /* TextFieldTableViewCell.swift */,
+			);
+			path = Cells;
+			sourceTree = "<group>";
+		};
 		F392264528BF29CC006D492C /* Custom Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -69,7 +88,7 @@
 				F3A0EC2D28BE0E1100805B88 /* AppDelegate.swift */,
 				F3A0EC2F28BE0E1100805B88 /* SceneDelegate.swift */,
 				F392264628BF382F006D492C /* Extensions.swift */,
-				F3A0EC3128BE0E1100805B88 /* RegisterView.swift */,
+				F38695A928C11F0E00480D59 /* RegisterView */,
 				F392264528BF29CC006D492C /* Custom Views */,
 				F3A0EC3628BE0E1200805B88 /* Assets.xcassets */,
 				F3A0EC3828BE0E1200805B88 /* LaunchScreen.storyboard */,
@@ -151,6 +170,7 @@
 				F392264728BF382F006D492C /* Extensions.swift in Sources */,
 				F392264428BF29C6006D492C /* CustomTextField.swift in Sources */,
 				F3A0EC3228BE0E1100805B88 /* RegisterView.swift in Sources */,
+				F38695A728C1139600480D59 /* TextFieldTableViewCell.swift in Sources */,
 				F3A0EC2E28BE0E1100805B88 /* AppDelegate.swift in Sources */,
 				F3A0EC3028BE0E1100805B88 /* SceneDelegate.swift in Sources */,
 			);

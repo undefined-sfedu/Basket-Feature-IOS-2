@@ -9,16 +9,20 @@ import UIKit
 
 class RegisterView: UIViewController {
     
-    let cusView = UIView()
+    //MARK: - Properties
+    private var colorOfUnderViews = UIColor.white
+    private var size: CGSize{
+        return view.frame.size
+    }
     //MARK: - Views
-    private var scrollView: UIScrollView{
-        let scroll = UIScrollView()
-        scroll.frame = self.view.frame
-        scroll.center = self.view.center
-        scroll.contentSize = CGSize(width: self.view.frame.width, height: self.view.frame.height * 1.1)
-        scroll.backgroundColor = .systemGray4
+    private var tableView: UITableView{
+        let table = UITableView(frame: self.view.frame, style: .insetGrouped)
+        table.backgroundColor = colorOfUnderViews
+        table.delegate = self
+        table.dataSource = self
+        table.register(TextFieldTableViewCell.self, forCellReuseIdentifier: "\(TextFieldTableViewCell.self)")
         
-        return scroll
+        return table
     }
     private var emailTextField = CustomTextField()
     private var passwordTextField = CustomTextField()
@@ -28,14 +32,13 @@ class RegisterView: UIViewController {
         label.text = "Пароль должен содержать минимум 8 символов латинскими буквами, а также хотя бы одну цифру"
         label.font = UIFont(name: label.font.fontName, size: 14)
         label.numberOfLines = 0
-        let size = self.view.frame.size
+        
         label.frame.size = CGSize(width: size.width * 0.768, height: size.height * 0.103)
         label.frame.origin = CGPoint(x: size.width * 0.074, y: size.height * 0.321)
         return label
     }
     private var registerButton: UIButton{
         let button = UIButton()
-        let size = self.view.frame.size
         button.frame.size = CGSize(width: size.width * 0.853, height: size.height * 0.104)
         button.frame.origin = CGPoint(x: size.width * 0.074, y: size.height * 0.769)
         button.setTitle("Зарегистрироваться", for: .normal)
@@ -48,7 +51,7 @@ class RegisterView: UIViewController {
     
     private var haveAccountButton: UIButton{
         let button = UIButton()
-        let size = self.view.frame.size
+        
         button.frame.size = CGSize(width: size.width * 0.586, height: size.height * 0.034)
         button.frame.origin = CGPoint(x: size.width * 0.208, y: size.height * 0.896)
         //        button.setTitle("уже есть аккаунт", for: .normal)
@@ -75,21 +78,19 @@ class RegisterView: UIViewController {
     }
   
 }
-
+//MARK: - Private Methods
 private extension RegisterView{
     func setAppearance(){
         view.backgroundColor = .white
         title = "Регистрация"
         navigationController?.navigationBar.prefersLargeTitles = true
         
-        view.addSubview(scrollView)
-        
         getTextFields().forEach { item in
-            scrollView.addSubview(item)
+            view.addSubview(item)
         }
         
         [attentionPassword, registerButton, haveAccountButton].forEach { item in
-            scrollView.addSubview(item)
+            view.addSubview(item)
         }
         
     }
@@ -122,14 +123,26 @@ private extension RegisterView{
     
     func setTextField(textField: CustomTextField) -> CustomTextField{
         let field = CustomTextField()
-        let size = view.frame.size
+        
         field.frame.size = CGSize(width: size.width * 0.853, height: size.height * 0.089)
-        //        field.frame.origin = CGPoint(x: size.width * 0.074, y: size.height * 0.211)
+        
         field.layer.cornerRadius = 12
-        //        field.placeholder = "Электронная почта"
+        
         field.layer.borderWidth = 1
         field.layer.borderColor = CGColor(red: 174/255, green: 174/255, blue: 174/255, alpha: 1)
         return field
     }
 }
-
+//MARK: - TableView
+extension RegisterView: UITableViewDelegate, UITableViewDataSource{
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        6
+    }
+    
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        return UITableViewCell()
+    }
+    
+    
+}
