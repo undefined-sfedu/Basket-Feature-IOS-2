@@ -14,13 +14,26 @@ class RegisterView: UIViewController {
     private var size: CGSize{
         return view.frame.size
     }
+    
+    private enum TypeOfCellByNum: Int{
+        case loginTextField = 0
+        case attentionAboutPassword
+        case passwordTextField
+        case repeatPasswordTextField
+        case logInButton
+        case haveAccount
+    }
     //MARK: - Views
     private var tableView: UITableView{
         let table = UITableView(frame: self.view.frame, style: .insetGrouped)
+
         table.backgroundColor = colorOfUnderViews
         table.delegate = self
         table.dataSource = self
         table.register(TextFieldTableViewCell.self, forCellReuseIdentifier: "\(TextFieldTableViewCell.self)")
+        table.register(AttentionPasswordTableViewCell.self, forCellReuseIdentifier: "\(AttentionPasswordTableViewCell.self)")
+        table.register(LogInTableViewCell.self, forCellReuseIdentifier: "\(LogInTableViewCell.self)")
+        table.register(AlreadyHaveAccountTableViewCell.self, forCellReuseIdentifier: "\(AlreadyHaveAccountTableViewCell.self)")
         
         return table
     }
@@ -84,14 +97,14 @@ private extension RegisterView{
         view.backgroundColor = .white
         title = "Регистрация"
         navigationController?.navigationBar.prefersLargeTitles = true
-        
-        getTextFields().forEach { item in
-            view.addSubview(item)
-        }
-        
-        [attentionPassword, registerButton, haveAccountButton].forEach { item in
-            view.addSubview(item)
-        }
+        view.addSubview(tableView)
+//        getTextFields().forEach { item in
+//            view.addSubview(item)
+//        }
+//
+//        [attentionPassword, registerButton, haveAccountButton].forEach { item in
+//            view.addSubview(item)
+//        }
         
     }
     
@@ -125,9 +138,7 @@ private extension RegisterView{
         let field = CustomTextField()
         
         field.frame.size = CGSize(width: size.width * 0.853, height: size.height * 0.089)
-        
         field.layer.cornerRadius = 12
-        
         field.layer.borderWidth = 1
         field.layer.borderColor = CGColor(red: 174/255, green: 174/255, blue: 174/255, alpha: 1)
         return field
@@ -141,8 +152,90 @@ extension RegisterView: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        var cell = UITableViewCell()
+        switch indexPath.row{
+        case TypeOfCellByNum.loginTextField.rawValue:
+            cell = tableView.dequeueReusableCell(withIdentifier: "\(TextFieldTableViewCell.self)", for: indexPath)
+            if let newCell = cell as? TextFieldTableViewCell{
+                newCell.placeholder = "Электронная почта"
+                newCell.errorTitle = "something"
+                
+            }
+            break
+            
+        case TypeOfCellByNum.attentionAboutPassword.rawValue:
+            cell = tableView.dequeueReusableCell(withIdentifier: "\(AttentionPasswordTableViewCell.self)", for: indexPath)
+            if let newCell = cell as? AttentionPasswordTableViewCell{
+                newCell.title = "Пароль должен содержать минимум 8 символов латинскими буквами, а также хотя бы одну цифру"
+                
+                
+            }
+            break
+            
+        case TypeOfCellByNum.passwordTextField.rawValue:
+            cell = tableView.dequeueReusableCell(withIdentifier: "\(TextFieldTableViewCell.self)", for: indexPath)
+            if let newCell = cell as? TextFieldTableViewCell{
+                newCell.placeholder = "Пароль"
+                newCell.errorTitle = "something"
+                
+            }
+            break
+            
+        case TypeOfCellByNum.repeatPasswordTextField.rawValue:
+            cell = tableView.dequeueReusableCell(withIdentifier: "\(TextFieldTableViewCell.self)", for: indexPath)
+            if let newCell = cell as? TextFieldTableViewCell{
+                newCell.placeholder = "Повторите пароль"
+                newCell.errorTitle = "something"
+                
+            }
+            
+        case TypeOfCellByNum.logInButton.rawValue:
+            cell = tableView.dequeueReusableCell(withIdentifier: "\(LogInTableViewCell.self)", for: indexPath)
+            
+            break
+            
+        case TypeOfCellByNum.haveAccount.rawValue:
+            cell = tableView.dequeueReusableCell(withIdentifier: "\(AlreadyHaveAccountTableViewCell.self)", for: indexPath)
+            
+            break
+        default:
+            print("\(RegisterView.self): Check cellForRowAt method")
+            break
+        }
+        
+        return cell
+        
     }
     
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+//        size.height * 0.124
+        var res: CGFloat = self.view.frame.height
+        switch indexPath.row{
+            
+        case TypeOfCellByNum.loginTextField.rawValue, TypeOfCellByNum.passwordTextField.rawValue, TypeOfCellByNum.repeatPasswordTextField.rawValue :
+            res *= 0.124
+            break
+            
+        case TypeOfCellByNum.attentionAboutPassword.rawValue:
+            res *= 0.103
+            break
+        
+            
+        case TypeOfCellByNum.logInButton.rawValue:
+            res *= 0.105
+            break
+            
+        case TypeOfCellByNum.haveAccount.rawValue:
+            res *= 0.061
+            break
+            
+        default:
+            res = 0.034
+            break
+        
+        }
+        return res
+    }
     
+
 }

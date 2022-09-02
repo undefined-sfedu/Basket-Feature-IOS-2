@@ -12,13 +12,15 @@ class TextFieldTableViewCell: UITableViewCell {
     var placeholder: String = ""{
         didSet{
             textField.placeholder = placeholder
+            
         }
     }
     
     var errorTitle: String = ""{
         didSet{
-            errorLabel.text = errorTitle
-            errorLabel.isHidden = ((errorLabel.text == "") ? true : false)
+            errorLabel.text = "*" + errorTitle
+            errorLabel.isHidden = ((errorTitle == "") ? true : false)
+            
         }
     }
     
@@ -35,10 +37,11 @@ class TextFieldTableViewCell: UITableViewCell {
         let field = CustomTextField()
         field.frame = CGRect(x: 0, y: 0,
                              width: self.frame.width,
-                             height: self.frame.height * 0.240)
+                             height: self.frame.height * 0.722)
         field.layer.cornerRadius = 12
         field.layer.borderWidth = 1
         field.layer.borderColor = UIColor.customBorderColor.cgColor
+        field.placeholder = placeholder
         return field
     }
     
@@ -49,14 +52,18 @@ class TextFieldTableViewCell: UITableViewCell {
                              width: self.frame.width * 0.687,
                              height: self.frame.height * 0.277)
         label.textColor = .customOrange
-        label.isHidden = true
+        label.text = errorTitle
+//        label.isHidden = true
+        
         return label
     }
     
     //MARK: - UiTableViewCell
     override func layoutSubviews() {
+//        print(textField.placeholder)
+//        print(errorLabel.text)
         self.contentView.addSubview(textField)
-        self.contentView.addSubview(textField)
+        self.contentView.addSubview(errorLabel)
         
     }
 }

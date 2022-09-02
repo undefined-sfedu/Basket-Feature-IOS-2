@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		F38695A728C1139600480D59 /* TextFieldTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F38695A528C1139600480D59 /* TextFieldTableViewCell.swift */; };
+		F387E50E28C223560075DCCF /* AttentionPasswordTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F387E50D28C223560075DCCF /* AttentionPasswordTableViewCell.swift */; };
+		F387E51028C22B810075DCCF /* LogInTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F387E50F28C22B810075DCCF /* LogInTableViewCell.swift */; };
+		F387E51228C22F9A0075DCCF /* AlreadyHaveAccountTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = F387E51128C22F9A0075DCCF /* AlreadyHaveAccountTableViewCell.swift */; };
 		F392264428BF29C6006D492C /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F392264328BF29C6006D492C /* CustomTextField.swift */; };
 		F392264728BF382F006D492C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F392264628BF382F006D492C /* Extensions.swift */; };
 		F3A0EC2E28BE0E1100805B88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A0EC2D28BE0E1100805B88 /* AppDelegate.swift */; };
@@ -19,6 +22,9 @@
 
 /* Begin PBXFileReference section */
 		F38695A528C1139600480D59 /* TextFieldTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldTableViewCell.swift; sourceTree = "<group>"; };
+		F387E50D28C223560075DCCF /* AttentionPasswordTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttentionPasswordTableViewCell.swift; sourceTree = "<group>"; };
+		F387E50F28C22B810075DCCF /* LogInTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInTableViewCell.swift; sourceTree = "<group>"; };
+		F387E51128C22F9A0075DCCF /* AlreadyHaveAccountTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AlreadyHaveAccountTableViewCell.swift; sourceTree = "<group>"; };
 		F392264328BF29C6006D492C /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		F392264628BF382F006D492C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F3A0EC2A28BE0E1100805B88 /* BasketFeature3.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasketFeature3.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -53,6 +59,9 @@
 		F38695AA28C11F1A00480D59 /* Cells */ = {
 			isa = PBXGroup;
 			children = (
+				F387E50F28C22B810075DCCF /* LogInTableViewCell.swift */,
+				F387E51128C22F9A0075DCCF /* AlreadyHaveAccountTableViewCell.swift */,
+				F387E50D28C223560075DCCF /* AttentionPasswordTableViewCell.swift */,
 				F38695A528C1139600480D59 /* TextFieldTableViewCell.swift */,
 			);
 			path = Cells;
@@ -169,10 +178,13 @@
 			files = (
 				F392264728BF382F006D492C /* Extensions.swift in Sources */,
 				F392264428BF29C6006D492C /* CustomTextField.swift in Sources */,
+				F387E51228C22F9A0075DCCF /* AlreadyHaveAccountTableViewCell.swift in Sources */,
 				F3A0EC3228BE0E1100805B88 /* RegisterView.swift in Sources */,
+				F387E50E28C223560075DCCF /* AttentionPasswordTableViewCell.swift in Sources */,
 				F38695A728C1139600480D59 /* TextFieldTableViewCell.swift in Sources */,
 				F3A0EC2E28BE0E1100805B88 /* AppDelegate.swift in Sources */,
 				F3A0EC3028BE0E1100805B88 /* SceneDelegate.swift in Sources */,
+				F387E51028C22B810075DCCF /* LogInTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
