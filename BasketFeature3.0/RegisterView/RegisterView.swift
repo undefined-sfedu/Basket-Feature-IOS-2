@@ -1,241 +1,228 @@
 //
-//  RegisterView.swift
+//  RegisterView3.swift
 //  BasketFeature3.0
 //
-//  Created by Daniil on 30.08.2022.
+//  Created by Daniil on 06.09.2022.
 //
 
 import UIKit
 
-class RegisterView: UIViewController {
+class RegisterView: UIViewController, UITextFieldDelegate {
     
-    //MARK: - Properties
-    private var colorOfUnderViews = UIColor.white
-    private var size: CGSize{
-        return view.frame.size
-    }
+    // MARK: - Views
+    private var scrollView = UIScrollView()
     
-    private enum TypeOfCellByNum: Int{
-        case loginTextField = 0
-        case attentionAboutPassword
-        case passwordTextField
-        case repeatPasswordTextField
-        case logInButton
-        case haveAccount
-    }
-    //MARK: - Views
-    private var tableView: UITableView{
-        let table = UITableView(frame: self.view.frame, style: .insetGrouped)
-
-        table.backgroundColor = colorOfUnderViews
-        table.delegate = self
-        table.dataSource = self
-        table.register(TextFieldTableViewCell.self, forCellReuseIdentifier: "\(TextFieldTableViewCell.self)")
-        table.register(AttentionPasswordTableViewCell.self, forCellReuseIdentifier: "\(AttentionPasswordTableViewCell.self)")
-        table.register(LogInTableViewCell.self, forCellReuseIdentifier: "\(LogInTableViewCell.self)")
-        table.register(AlreadyHaveAccountTableViewCell.self, forCellReuseIdentifier: "\(AlreadyHaveAccountTableViewCell.self)")
-        
-        return table
-    }
-    private var emailTextField = CustomTextField()
-    private var passwordTextField = CustomTextField()
-    private var repeatPasswordTextField = CustomTextField()
-    private var attentionPassword: UILabel{
+    private let registrationLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Регистрация"
+        label.textAlignment = .center
+        label.font = UIFont(name: label.font.fontName, size: 30)
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private var emailTextField: CustomTextField = {
+        let field = CustomTextField()
+        field.placeholder = "Электронная почта"
+        field.layer.borderColor = UIColor.customBorderColor.cgColor
+        field.layer.borderWidth = 1
+        field.layer.cornerRadius = 10
+        field.translatesAutoresizingMaskIntoConstraints = false
+        return field
+    }()
+    
+    private let errorUnderEmailLabel: UILabel = {
+        let label = UILabel()
+        label.text = "*неверный формат"
+        label.numberOfLines = 0
+        label.textColor = .customOrange
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let attentionLabel: UILabel = {
         let label = UILabel()
         label.text = "Пароль должен содержать минимум 8 символов латинскими буквами, а также хотя бы одну цифру"
-        label.font = UIFont(name: label.font.fontName, size: 14)
         label.numberOfLines = 0
-        
-        label.frame.size = CGSize(width: size.width * 0.768, height: size.height * 0.103)
-        label.frame.origin = CGPoint(x: size.width * 0.074, y: size.height * 0.321)
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
-    }
-    private var registerButton: UIButton{
+    }()
+    
+    private let passwordTextField: CustomTextField = {
+        let field = CustomTextField()
+        field.placeholder = "Пароль"
+        field.layer.borderColor = UIColor.customBorderColor.cgColor
+        field.layer.borderWidth = 1
+        field.layer.cornerRadius = 10
+        field.translatesAutoresizingMaskIntoConstraints = false
+        return field
+    }()
+    
+    private let errorUnderPasswordLabel: UILabel = {
+        let label = UILabel()
+        label.text = "*неверный формат"
+        label.numberOfLines = 0
+        label.textColor = .customOrange
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let repeatPasswordTextField: CustomTextField = {
+        let field = CustomTextField()
+        field.placeholder = "Повторите пароль"
+        field.layer.borderColor = UIColor.customBorderColor.cgColor
+        field.layer.borderWidth = 1
+        field.layer.cornerRadius = 10
+        field.translatesAutoresizingMaskIntoConstraints = false
+        return field
+    }()
+    
+    private let errorUnderRepeatPasswordLabel: UILabel = {
+        let label = UILabel()
+        label.text = "*пароли не совпадают"
+        label.numberOfLines = 0
+        label.textColor = .customOrange
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    private let logInButton: UIButton = {
         let button = UIButton()
-        button.frame.size = CGSize(width: size.width * 0.853, height: size.height * 0.104)
-        button.frame.origin = CGPoint(x: size.width * 0.074, y: size.height * 0.769)
         button.setTitle("Зарегистрироваться", for: .normal)
-        button.setTitleColor(.black, for: .normal)
-        button.titleLabel?.font = UIFont(name: (button.titleLabel?.font.fontName)!, size: 30)
         button.backgroundColor = UIColor.customOrange
-        button.layer.cornerRadius = 10
-        return button
-    }
-    
-    private var haveAccountButton: UIButton{
-        let button = UIButton()
-        
-        button.frame.size = CGSize(width: size.width * 0.586, height: size.height * 0.034)
-        button.frame.origin = CGPoint(x: size.width * 0.208, y: size.height * 0.896)
-        //        button.setTitle("уже есть аккаунт", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        let titleString = NSMutableAttributedString(string: "уже есть аккаунт")
-        titleString.addAttribute(
-            .underlineStyle,
-            value: NSUnderlineStyle.single.rawValue,
-            range: NSRange(location: 0, length: ("уже есть аккаунт").count)
-        )
-        button.setAttributedTitle(titleString, for: .normal)
-        button.titleLabel?.font = UIFont(name: "SF Pro", size: 20)
+        button.layer.cornerRadius = 10
+        button.titleLabel?.font = UIFont(name: button.titleLabel!.font.fontName, size: 30)
+        button.translatesAutoresizingMaskIntoConstraints = false
         return button
-    }
+    }()
     
-    //MARK: - Methods
+    private let haveAccountButton: UIButton = {
+        let button = UIButton()
+        button.setTitle("уже есть аккаунт", for: .normal)
+        button.setTitleColor(.black, for: .normal)
+        button.layer.cornerRadius = 10
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
     
-    
-    
-    //MARK: - UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         setAppearance()
     }
-  
+    
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        let size = self.view.frame.size
+        scrollView.contentSize = CGSize(width: size.width, height: size.height * 1.15)
+    }
+    
+    
+    func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+        let size = self.view.frame.size
+        scrollView.contentSize = CGSize(width: size.width, height: size.height)
+        view.endEditing(true)
+        return true
+    }
+    
+    
 }
-//MARK: - Private Methods
+
+// MARK: - Private Methods
 private extension RegisterView{
     func setAppearance(){
         view.backgroundColor = .white
-        title = "Регистрация"
-        navigationController?.navigationBar.prefersLargeTitles = true
-        view.addSubview(tableView)
-//        getTextFields().forEach { item in
-//            view.addSubview(item)
-//        }
-//
-//        [attentionPassword, registerButton, haveAccountButton].forEach { item in
-//            view.addSubview(item)
-//        }
-        
-    }
-    
-    func getTextFields() -> [CustomTextField]{
-        var res = [CustomTextField]()
-        var views = [emailTextField, passwordTextField, repeatPasswordTextField]
-        
-        views.forEach { item in
-            res.append(setTextField(textField: item))
+        [emailTextField, passwordTextField, repeatPasswordTextField].forEach { item in
+            item.delegate = self
         }
+        setScrollView()
+        setConstrains()
+    }
+    func setScrollView(){
         
         let size = self.view.frame.size
-        let preference = [
-            ("Электронная почта", CGPoint(x: size.width * 0.074, y: size.height * 0.211)),
-            ("Пароль", CGPoint(x: size.width * 0.074, y: size.height * 0.436)),
-            ("Повторите пароль", CGPoint(x: size.width * 0.074, y: size.height * 0.581))
-        ]
-        for i in 0...res.count-1{
-            
-            res[i].placeholder = preference[i].0
-            res[i].frame.origin = preference[i].1
+        scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
+        scrollView.backgroundColor = .white
+        scrollView.showsVerticalScrollIndicator = false
+//        scrollView.contentSize = CGSize(width: size.width, height: size.height * 1.15)
+        
+        view.addSubview(scrollView)
+        
+        [registrationLabel, emailTextField, errorUnderEmailLabel, attentionLabel, passwordTextField, errorUnderPasswordLabel, repeatPasswordTextField, errorUnderRepeatPasswordLabel, logInButton, haveAccountButton].forEach { item in
+            scrollView.addSubview(item)
         }
-        
-        for i in 0...res.count - 1{
-            views[i] = res[i]
-        }
-        return res
     }
     
-    func setTextField(textField: CustomTextField) -> CustomTextField{
-        let field = CustomTextField()
+    func setConstrains(){
+        NSLayoutConstraint.activate([
+            registrationLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 0.053),
+            registrationLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.496),
+            registrationLabel.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 0.029),
+            registrationLabel.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.053)
+        ])
         
-        field.frame.size = CGSize(width: size.width * 0.853, height: size.height * 0.089)
-        field.layer.cornerRadius = 12
-        field.layer.borderWidth = 1
-        field.layer.borderColor = CGColor(red: 174/255, green: 174/255, blue: 174/255, alpha: 1)
-        return field
+        NSLayoutConstraint.activate([
+            emailTextField.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: scrollView.frame.width * 0.074),
+            emailTextField.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.853),
+            emailTextField.topAnchor.constraint(equalTo: registrationLabel.bottomAnchor, constant: scrollView.frame.height * 0.047),
+            emailTextField.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.089)
+        ])
+        
+        NSLayoutConstraint.activate([
+            errorUnderEmailLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: scrollView.frame.width * 0.12),
+            errorUnderEmailLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.586),
+            errorUnderEmailLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor),
+            errorUnderEmailLabel.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.034)
+        ])
+        
+        NSLayoutConstraint.activate([
+            attentionLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: scrollView.frame.width * 0.074),
+            attentionLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.768),
+            attentionLabel.topAnchor.constraint(equalTo: emailTextField.bottomAnchor, constant: scrollView.frame.height * 0.025),
+            attentionLabel.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.103)
+        ])
+        
+        NSLayoutConstraint.activate([
+            passwordTextField.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: scrollView.frame.width * 0.074),
+            passwordTextField.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.853),
+            passwordTextField.topAnchor.constraint(equalTo: attentionLabel.bottomAnchor, constant: scrollView.frame.height * 0.005),
+            passwordTextField.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.089)
+        ])
+        
+        NSLayoutConstraint.activate([
+            errorUnderPasswordLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: scrollView.frame.width * 0.12),
+            errorUnderPasswordLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.586),
+            errorUnderPasswordLabel.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor),
+            errorUnderPasswordLabel.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.034)
+        ])
+        
+        NSLayoutConstraint.activate([
+            repeatPasswordTextField.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: scrollView.frame.width * 0.074),
+            repeatPasswordTextField.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.853),
+            repeatPasswordTextField.topAnchor.constraint(equalTo: passwordTextField.bottomAnchor, constant: scrollView.frame.height * 0.055),
+            repeatPasswordTextField.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.089)
+        ])
+        
+        NSLayoutConstraint.activate([
+            errorUnderRepeatPasswordLabel.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: scrollView.frame.width * 0.12),
+            errorUnderRepeatPasswordLabel.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.586),
+            errorUnderRepeatPasswordLabel.topAnchor.constraint(equalTo: repeatPasswordTextField.bottomAnchor),
+            errorUnderRepeatPasswordLabel.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.034)
+        ])
+        
+        NSLayoutConstraint.activate([
+            logInButton.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: scrollView.frame.width * 0.074),
+            logInButton.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.853),
+            logInButton.topAnchor.constraint(equalTo: repeatPasswordTextField.bottomAnchor, constant: scrollView.frame.height * 0.097),
+            logInButton.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.104)
+        ])
+        
+        NSLayoutConstraint.activate([
+            haveAccountButton.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: scrollView.frame.width * 0.208),
+            haveAccountButton.widthAnchor.constraint(equalTo: scrollView.widthAnchor, multiplier: 0.586),
+            haveAccountButton.topAnchor.constraint(equalTo: logInButton.bottomAnchor, constant: scrollView.frame.height * 0.022),
+            haveAccountButton.heightAnchor.constraint(equalTo: scrollView.heightAnchor, multiplier: 0.034)
+        ])
     }
-}
-//MARK: - TableView
-extension RegisterView: UITableViewDelegate, UITableViewDataSource{
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        6
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        var cell = UITableViewCell()
-        switch indexPath.row{
-        case TypeOfCellByNum.loginTextField.rawValue:
-            cell = tableView.dequeueReusableCell(withIdentifier: "\(TextFieldTableViewCell.self)", for: indexPath)
-            if let newCell = cell as? TextFieldTableViewCell{
-                newCell.placeholder = "Электронная почта"
-                newCell.errorTitle = "something"
-                
-            }
-            break
-            
-        case TypeOfCellByNum.attentionAboutPassword.rawValue:
-            cell = tableView.dequeueReusableCell(withIdentifier: "\(AttentionPasswordTableViewCell.self)", for: indexPath)
-            if let newCell = cell as? AttentionPasswordTableViewCell{
-                newCell.title = "Пароль должен содержать минимум 8 символов латинскими буквами, а также хотя бы одну цифру"
-                
-                
-            }
-            break
-            
-        case TypeOfCellByNum.passwordTextField.rawValue:
-            cell = tableView.dequeueReusableCell(withIdentifier: "\(TextFieldTableViewCell.self)", for: indexPath)
-            if let newCell = cell as? TextFieldTableViewCell{
-                newCell.placeholder = "Пароль"
-                newCell.errorTitle = "something"
-                
-            }
-            break
-            
-        case TypeOfCellByNum.repeatPasswordTextField.rawValue:
-            cell = tableView.dequeueReusableCell(withIdentifier: "\(TextFieldTableViewCell.self)", for: indexPath)
-            if let newCell = cell as? TextFieldTableViewCell{
-                newCell.placeholder = "Повторите пароль"
-                newCell.errorTitle = "something"
-                
-            }
-            
-        case TypeOfCellByNum.logInButton.rawValue:
-            cell = tableView.dequeueReusableCell(withIdentifier: "\(LogInTableViewCell.self)", for: indexPath)
-            
-            break
-            
-        case TypeOfCellByNum.haveAccount.rawValue:
-            cell = tableView.dequeueReusableCell(withIdentifier: "\(AlreadyHaveAccountTableViewCell.self)", for: indexPath)
-            
-            break
-        default:
-            print("\(RegisterView.self): Check cellForRowAt method")
-            break
-        }
-        
-        return cell
-        
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-//        size.height * 0.124
-        var res: CGFloat = self.view.frame.height
-        switch indexPath.row{
-            
-        case TypeOfCellByNum.loginTextField.rawValue, TypeOfCellByNum.passwordTextField.rawValue, TypeOfCellByNum.repeatPasswordTextField.rawValue :
-            res *= 0.124
-            break
-            
-        case TypeOfCellByNum.attentionAboutPassword.rawValue:
-            res *= 0.103
-            break
-        
-            
-        case TypeOfCellByNum.logInButton.rawValue:
-            res *= 0.105
-            break
-            
-        case TypeOfCellByNum.haveAccount.rawValue:
-            res *= 0.061
-            break
-            
-        default:
-            res = 0.034
-            break
-        
-        }
-        return res
-    }
-    
-
 }
