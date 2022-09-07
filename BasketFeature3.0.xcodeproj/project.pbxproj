@@ -14,6 +14,9 @@
 		F3A0EC3728BE0E1200805B88 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = F3A0EC3628BE0E1200805B88 /* Assets.xcassets */; };
 		F3A0EC3A28BE0E1200805B88 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F3A0EC3828BE0E1200805B88 /* LaunchScreen.storyboard */; };
 		F3BCDB5D28C7B671001BB1B8 /* RegisterView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BCDB5C28C7B671001BB1B8 /* RegisterView.swift */; };
+		F3BCDB5F28C86E68001BB1B8 /* RegisterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BCDB5E28C86E68001BB1B8 /* RegisterPresenter.swift */; };
+		F3BCDB6228C87DA1001BB1B8 /* ConfirmEmailSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BCDB6128C87DA1001BB1B8 /* ConfirmEmailSheetView.swift */; };
+		F3BCDB6428C88729001BB1B8 /* TeamsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BCDB6328C88729001BB1B8 /* TeamsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +29,9 @@
 		F3A0EC3928BE0E1200805B88 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		F3A0EC3B28BE0E1200805B88 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		F3BCDB5C28C7B671001BB1B8 /* RegisterView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterView.swift; sourceTree = "<group>"; };
+		F3BCDB5E28C86E68001BB1B8 /* RegisterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPresenter.swift; sourceTree = "<group>"; };
+		F3BCDB6128C87DA1001BB1B8 /* ConfirmEmailSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmEmailSheetView.swift; sourceTree = "<group>"; };
+		F3BCDB6328C88729001BB1B8 /* TeamsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -43,6 +49,7 @@
 			isa = PBXGroup;
 			children = (
 				F3BCDB5C28C7B671001BB1B8 /* RegisterView.swift */,
+				F3BCDB5E28C86E68001BB1B8 /* RegisterPresenter.swift */,
 			);
 			path = RegisterView;
 			sourceTree = "<group>";
@@ -78,12 +85,30 @@
 				F3A0EC2F28BE0E1100805B88 /* SceneDelegate.swift */,
 				F392264628BF382F006D492C /* Extensions.swift */,
 				F38695A928C11F0E00480D59 /* RegisterView */,
-				F392264528BF29CC006D492C /* Custom Views */,
+				F3BCDB6028C87741001BB1B8 /* ConfirmEmailSheet */,
+				F3BCDB6528C88732001BB1B8 /* Teams */,
 				F3A0EC3628BE0E1200805B88 /* Assets.xcassets */,
+				F392264528BF29CC006D492C /* Custom Views */,
 				F3A0EC3828BE0E1200805B88 /* LaunchScreen.storyboard */,
 				F3A0EC3B28BE0E1200805B88 /* Info.plist */,
 			);
 			path = BasketFeature3.0;
+			sourceTree = "<group>";
+		};
+		F3BCDB6028C87741001BB1B8 /* ConfirmEmailSheet */ = {
+			isa = PBXGroup;
+			children = (
+				F3BCDB6128C87DA1001BB1B8 /* ConfirmEmailSheetView.swift */,
+			);
+			path = ConfirmEmailSheet;
+			sourceTree = "<group>";
+		};
+		F3BCDB6528C88732001BB1B8 /* Teams */ = {
+			isa = PBXGroup;
+			children = (
+				F3BCDB6328C88729001BB1B8 /* TeamsViewController.swift */,
+			);
+			path = Teams;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -157,8 +182,11 @@
 			buildActionMask = 2147483647;
 			files = (
 				F392264728BF382F006D492C /* Extensions.swift in Sources */,
+				F3BCDB5F28C86E68001BB1B8 /* RegisterPresenter.swift in Sources */,
 				F392264428BF29C6006D492C /* CustomTextField.swift in Sources */,
+				F3BCDB6228C87DA1001BB1B8 /* ConfirmEmailSheetView.swift in Sources */,
 				F3BCDB5D28C7B671001BB1B8 /* RegisterView.swift in Sources */,
+				F3BCDB6428C88729001BB1B8 /* TeamsViewController.swift in Sources */,
 				F3A0EC2E28BE0E1100805B88 /* AppDelegate.swift in Sources */,
 				F3A0EC3028BE0E1100805B88 /* SceneDelegate.swift in Sources */,
 			);

@@ -9,9 +9,12 @@ import UIKit
 
 class RegisterView: UIViewController, UITextFieldDelegate {
     
+    // MARK: - Properties
+    private var presenter: RegisterPresenter = .init()
+    
+    
     // MARK: - Views
     private var scrollView = UIScrollView()
-    
     private let registrationLabel: UILabel = {
         let label = UILabel()
         label.text = "Регистрация"
@@ -38,6 +41,7 @@ class RegisterView: UIViewController, UITextFieldDelegate {
         label.numberOfLines = 0
         label.textColor = .customOrange
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
         return label
     }()
     
@@ -66,6 +70,7 @@ class RegisterView: UIViewController, UITextFieldDelegate {
         label.numberOfLines = 0
         label.textColor = .customOrange
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
         return label
     }()
     
@@ -85,6 +90,7 @@ class RegisterView: UIViewController, UITextFieldDelegate {
         label.numberOfLines = 0
         label.textColor = .customOrange
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.isHidden = true
         return label
     }()
     
@@ -96,6 +102,7 @@ class RegisterView: UIViewController, UITextFieldDelegate {
         button.layer.cornerRadius = 10
         button.titleLabel?.font = UIFont(name: button.titleLabel!.font.fontName, size: 30)
         button.translatesAutoresizingMaskIntoConstraints = false
+        
         return button
     }()
     
@@ -107,45 +114,143 @@ class RegisterView: UIViewController, UITextFieldDelegate {
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
-    
+    // MARK: - UIViewController
     override func viewDidLoad() {
         super.viewDidLoad()
         setAppearance()
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    // MARK: - TextFieldDelegate
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        let size = self.view.frame.size
-        scrollView.contentSize = CGSize(width: size.width, height: size.height * 1.15)
+        textField.textColor = .customOrange
+        textField.layer.borderColor = UIColor.customOrange.cgColor
+        
+        if textField == emailTextField{
+            errorUnderEmailLabel.isHidden = true
+        }
+        
+        else if textField == passwordTextField{
+            errorUnderPasswordLabel.isHidden = true
+        }
+        else{
+            errorUnderRepeatPasswordLabel.isHidden = true
+        }
+    }
+    
+    func textFieldDidEndEditing(_ textField: UITextField) {
+        textField.textColor = .black
+        textField.layer.borderColor = UIColor.customBorderColor.cgColor
+        
     }
     
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        let size = self.view.frame.size
-        scrollView.contentSize = CGSize(width: size.width, height: size.height)
+        
+        self.view.frame.origin.y = 0
         view.endEditing(true)
         return true
     }
-    
+    // MARK: - Methods For Presenter
+    func changeVisibleOfErrorFields(typeOfLabel: RegisterPresenter.TypeError, visible: Bool){
+        
+        var errorLabel = UILabel()
+        var textField = CustomTextField()
+        switch typeOfLabel{
+        case .emailError:
+            errorLabel = errorUnderEmailLabel
+            textField = emailTextField
+            
+        case .passwordError:
+            errorLabel = errorUnderPasswordLabel
+            textField = passwordTextField
+
+        case .repeatPasswordError:
+            errorLabel = errorUnderRepeatPasswordLabel
+            textField = repeatPasswordTextField
+        }
+        
+        errorLabel.isHidden = !visible
+        textField.textColor = visible ? (.red) : (.black)
+        textField.layer.borderColor = (visible ? (UIColor.red.cgColor) : (UIColor.customBorderColor.cgColor))
+    }
+    // MARK: - Method For ConfirmEmailSheetView
+    func goToNextView(){
+        navigationController?.pushViewController(TeamsViewController(), animated: true)
+    }
     
 }
 
 // MARK: - Private Methods
 private extension RegisterView{
+    
+    // MARK: - OBJC Methods
+    @objc func keyboardWillShow(notification: Notification) {
+        let userInfo:NSDictionary = notification.userInfo! as NSDictionary
+        let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
+        let keyboardRectangle = keyboardFrame.cgRectValue
+        let keyboardHeight = keyboardRectangle.height
+//
+        scrollView.contentSize.height = scrollView.frame.height + keyboardHeight * 0.7
+    }
+    
+    @objc func keyboardWillHide(notification: Notification) {
+        scrollView.contentSize.height = scrollView.frame.height
+    }
+    
+    @objc func hideKeyboard(_ sender: UITapGestureRecognizer) {
+        view.endEditing(true)
+    }
+    
+    @objc func logInAction(_ sender: UIButton) {
+        view.endEditing(true)
+//        presenter.logIn()
+        let confirmView = ConfirmEmailSheetView()
+        confirmView.customParent = self
+        if let sheet = confirmView.sheetPresentationController{
+            sheet.detents = [.medium()]
+            
+        }
+        present(confirmView, animated: true)
+    }
+    
     func setAppearance(){
         view.backgroundColor = .white
         [emailTextField, passwordTextField, repeatPasswordTextField].forEach { item in
             item.delegate = self
         }
+        presenter.accessView = self
+        setButtonsActions()
         setScrollView()
         setConstrains()
+        setGesture()
     }
+    
+    
+    
+    func setButtonsActions(){
+        logInButton.addTarget(self, action: #selector(logInAction(_:)), for: .touchDown)
+    }
+    
+    func setGesture(){
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(hideKeyboard(_:)))
+        scrollView.addGestureRecognizer(gesture)
+    }
+    
     func setScrollView(){
         
         let size = self.view.frame.size
         scrollView = UIScrollView(frame: CGRect(x: 0, y: 0, width: size.width, height: size.height))
         scrollView.backgroundColor = .white
         scrollView.showsVerticalScrollIndicator = false
-//        scrollView.contentSize = CGSize(width: size.width, height: size.height * 1.15)
+        
+        scrollView.contentSize = CGSize(width: size.width, height: size.height)
         
         view.addSubview(scrollView)
         
