@@ -110,7 +110,6 @@ class RegisterView: UIViewController, UITextFieldDelegate {
         let button = UIButton()
         button.setTitle("уже есть аккаунт", for: .normal)
         button.setTitleColor(.black, for: .normal)
-        button.layer.cornerRadius = 10
         button.translatesAutoresizingMaskIntoConstraints = false
         return button
     }()
@@ -118,8 +117,11 @@ class RegisterView: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         setAppearance()
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isHidden = false
     }
     
     override func viewWillDisappear(_ animated: Bool) {
@@ -152,8 +154,6 @@ class RegisterView: UIViewController, UITextFieldDelegate {
     
     
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-        
-        self.view.frame.origin.y = 0
         view.endEditing(true)
         return true
     }
@@ -180,14 +180,14 @@ class RegisterView: UIViewController, UITextFieldDelegate {
         textField.textColor = visible ? (.red) : (.black)
         textField.layer.borderColor = (visible ? (UIColor.red.cgColor) : (UIColor.customBorderColor.cgColor))
     }
-    // MARK: - Method For ConfirmEmailSheetView
+    // MARK: - Method For SheetView
     func goToNextView(){
         navigationController?.pushViewController(TeamsViewController(), animated: true)
     }
     
 }
 
-// MARK: - Private Methods
+
 private extension RegisterView{
     
     // MARK: - OBJC Methods
@@ -196,31 +196,39 @@ private extension RegisterView{
         let keyboardFrame:NSValue = userInfo.value(forKey: UIResponder.keyboardFrameEndUserInfoKey) as! NSValue
         let keyboardRectangle = keyboardFrame.cgRectValue
         let keyboardHeight = keyboardRectangle.height
-//
-        scrollView.contentSize.height = scrollView.frame.height + keyboardHeight * 0.7
+        let size = self.view.frame.size
+        scrollView.contentSize = CGSize(width: size.width, height: size.height + keyboardHeight * 0.7)
     }
     
     @objc func keyboardWillHide(notification: Notification) {
-        scrollView.contentSize.height = scrollView.frame.height
+        scrollView.contentSize = CGSize(width: 0, height: 0 )
     }
     
     @objc func hideKeyboard(_ sender: UITapGestureRecognizer) {
         view.endEditing(true)
     }
     
+   
     @objc func logInAction(_ sender: UIButton) {
         view.endEditing(true)
 //        presenter.logIn()
+        
         let confirmView = ConfirmEmailSheetView()
         confirmView.customParent = self
         if let sheet = confirmView.sheetPresentationController{
             sheet.detents = [.medium()]
-            
+
         }
         present(confirmView, animated: true)
     }
     
+    @objc func haveAccountAction(_ sender: UIButton) {
+        self.navigationController?.pushViewController(LogInView(), animated: true)
+    }
+    
+    // MARK: - Private Methods
     func setAppearance(){
+        
         view.backgroundColor = .white
         [emailTextField, passwordTextField, repeatPasswordTextField].forEach { item in
             item.delegate = self
@@ -230,12 +238,17 @@ private extension RegisterView{
         setScrollView()
         setConstrains()
         setGesture()
+        setObserversForKeyboard()
     }
     
-    
+    func setObserversForKeyboard(){
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(notification:)), name: UIResponder.keyboardDidShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
     
     func setButtonsActions(){
         logInButton.addTarget(self, action: #selector(logInAction(_:)), for: .touchDown)
+        haveAccountButton.addTarget(self, action: #selector(haveAccountAction(_:)), for: .touchDown)
     }
     
     func setGesture(){
@@ -250,7 +263,7 @@ private extension RegisterView{
         scrollView.backgroundColor = .white
         scrollView.showsVerticalScrollIndicator = false
         
-        scrollView.contentSize = CGSize(width: size.width, height: size.height)
+//        scrollView.contentSize = CGSize(width: size.width, height: size.height)
         
         view.addSubview(scrollView)
         

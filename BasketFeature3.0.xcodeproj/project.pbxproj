@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		F366E46128C9A0950080D5AE /* LogInView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F366E46028C9A0950080D5AE /* LogInView.swift */; };
+		F366E46328C9B1570080D5AE /* LoginPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F366E46228C9B1570080D5AE /* LoginPresenter.swift */; };
 		F392264428BF29C6006D492C /* CustomTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = F392264328BF29C6006D492C /* CustomTextField.swift */; };
 		F392264728BF382F006D492C /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F392264628BF382F006D492C /* Extensions.swift */; };
 		F3A0EC2E28BE0E1100805B88 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3A0EC2D28BE0E1100805B88 /* AppDelegate.swift */; };
@@ -20,6 +22,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		F366E46028C9A0950080D5AE /* LogInView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogInView.swift; sourceTree = "<group>"; };
+		F366E46228C9B1570080D5AE /* LoginPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginPresenter.swift; sourceTree = "<group>"; };
 		F392264328BF29C6006D492C /* CustomTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTextField.swift; sourceTree = "<group>"; };
 		F392264628BF382F006D492C /* Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
 		F3A0EC2A28BE0E1100805B88 /* BasketFeature3.0.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BasketFeature3.0.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -45,13 +49,23 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		F38695A928C11F0E00480D59 /* RegisterView */ = {
+		F366E45D28C9A0580080D5AE /* LogIn */ = {
 			isa = PBXGroup;
 			children = (
+				F366E46028C9A0950080D5AE /* LogInView.swift */,
+				F366E46228C9B1570080D5AE /* LoginPresenter.swift */,
+			);
+			path = LogIn;
+			sourceTree = "<group>";
+		};
+		F38695A928C11F0E00480D59 /* Register */ = {
+			isa = PBXGroup;
+			children = (
+				F3BCDB6028C87741001BB1B8 /* ConfirmEmailSheet */,
 				F3BCDB5C28C7B671001BB1B8 /* RegisterView.swift */,
 				F3BCDB5E28C86E68001BB1B8 /* RegisterPresenter.swift */,
 			);
-			path = RegisterView;
+			path = Register;
 			sourceTree = "<group>";
 		};
 		F392264528BF29CC006D492C /* Custom Views */ = {
@@ -84,8 +98,8 @@
 				F3A0EC2D28BE0E1100805B88 /* AppDelegate.swift */,
 				F3A0EC2F28BE0E1100805B88 /* SceneDelegate.swift */,
 				F392264628BF382F006D492C /* Extensions.swift */,
-				F38695A928C11F0E00480D59 /* RegisterView */,
-				F3BCDB6028C87741001BB1B8 /* ConfirmEmailSheet */,
+				F38695A928C11F0E00480D59 /* Register */,
+				F366E45D28C9A0580080D5AE /* LogIn */,
 				F3BCDB6528C88732001BB1B8 /* Teams */,
 				F3A0EC3628BE0E1200805B88 /* Assets.xcassets */,
 				F392264528BF29CC006D492C /* Custom Views */,
@@ -185,8 +199,10 @@
 				F3BCDB5F28C86E68001BB1B8 /* RegisterPresenter.swift in Sources */,
 				F392264428BF29C6006D492C /* CustomTextField.swift in Sources */,
 				F3BCDB6228C87DA1001BB1B8 /* ConfirmEmailSheetView.swift in Sources */,
+				F366E46328C9B1570080D5AE /* LoginPresenter.swift in Sources */,
 				F3BCDB5D28C7B671001BB1B8 /* RegisterView.swift in Sources */,
 				F3BCDB6428C88729001BB1B8 /* TeamsViewController.swift in Sources */,
+				F366E46128C9A0950080D5AE /* LogInView.swift in Sources */,
 				F3A0EC2E28BE0E1100805B88 /* AppDelegate.swift in Sources */,
 				F3A0EC3028BE0E1100805B88 /* SceneDelegate.swift in Sources */,
 			);
