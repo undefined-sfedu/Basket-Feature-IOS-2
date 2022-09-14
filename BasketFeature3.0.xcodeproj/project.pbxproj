@@ -19,6 +19,7 @@
 		F3BCDB5F28C86E68001BB1B8 /* RegisterPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BCDB5E28C86E68001BB1B8 /* RegisterPresenter.swift */; };
 		F3BCDB6228C87DA1001BB1B8 /* ConfirmEmailSheetView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BCDB6128C87DA1001BB1B8 /* ConfirmEmailSheetView.swift */; };
 		F3BCDB6428C88729001BB1B8 /* TeamsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3BCDB6328C88729001BB1B8 /* TeamsViewController.swift */; };
+		F3FB861C28D19F5D00956E32 /* ForgetPasswordView.swift in Sources */ = {isa = PBXBuildFile; fileRef = F3FB861B28D19F5D00956E32 /* ForgetPasswordView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -36,6 +37,7 @@
 		F3BCDB5E28C86E68001BB1B8 /* RegisterPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterPresenter.swift; sourceTree = "<group>"; };
 		F3BCDB6128C87DA1001BB1B8 /* ConfirmEmailSheetView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmEmailSheetView.swift; sourceTree = "<group>"; };
 		F3BCDB6328C88729001BB1B8 /* TeamsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeamsViewController.swift; sourceTree = "<group>"; };
+		F3FB861B28D19F5D00956E32 /* ForgetPasswordView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgetPasswordView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 				F38695A928C11F0E00480D59 /* Register */,
 				F366E45D28C9A0580080D5AE /* LogIn */,
 				F3BCDB6528C88732001BB1B8 /* Teams */,
+				F3FB861A28D19F3300956E32 /* ForgetPassword */,
 				F3A0EC3628BE0E1200805B88 /* Assets.xcassets */,
 				F392264528BF29CC006D492C /* Custom Views */,
 				F3A0EC3828BE0E1200805B88 /* LaunchScreen.storyboard */,
@@ -123,6 +126,14 @@
 				F3BCDB6328C88729001BB1B8 /* TeamsViewController.swift */,
 			);
 			path = Teams;
+			sourceTree = "<group>";
+		};
+		F3FB861A28D19F3300956E32 /* ForgetPassword */ = {
+			isa = PBXGroup;
+			children = (
+				F3FB861B28D19F5D00956E32 /* ForgetPasswordView.swift */,
+			);
+			path = ForgetPassword;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -204,6 +215,7 @@
 				F3BCDB6428C88729001BB1B8 /* TeamsViewController.swift in Sources */,
 				F366E46128C9A0950080D5AE /* LogInView.swift in Sources */,
 				F3A0EC2E28BE0E1100805B88 /* AppDelegate.swift in Sources */,
+				F3FB861C28D19F5D00956E32 /* ForgetPasswordView.swift in Sources */,
 				F3A0EC3028BE0E1100805B88 /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

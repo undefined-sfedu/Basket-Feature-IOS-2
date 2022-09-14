@@ -39,7 +39,7 @@ class RegisterView: UIViewController, UITextFieldDelegate {
         let label = UILabel()
         label.text = "*неверный формат"
         label.numberOfLines = 0
-        label.textColor = .customOrange
+        label.textColor = .red
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isHidden = true
         return label
@@ -48,6 +48,7 @@ class RegisterView: UIViewController, UITextFieldDelegate {
     private let attentionLabel: UILabel = {
         let label = UILabel()
         label.text = "Пароль должен содержать минимум 8 символов латинскими буквами, а также хотя бы одну цифру"
+        label.font = UIFont(name: "Verdana-Bold ", size: 20)
         label.numberOfLines = 0
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -68,7 +69,7 @@ class RegisterView: UIViewController, UITextFieldDelegate {
         let label = UILabel()
         label.text = "*неверный формат"
         label.numberOfLines = 0
-        label.textColor = .customOrange
+        label.textColor = .red
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isHidden = true
         return label
@@ -88,7 +89,7 @@ class RegisterView: UIViewController, UITextFieldDelegate {
         let label = UILabel()
         label.text = "*пароли не совпадают"
         label.numberOfLines = 0
-        label.textColor = .customOrange
+        label.textColor = .red
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isHidden = true
         return label

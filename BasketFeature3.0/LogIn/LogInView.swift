@@ -23,7 +23,7 @@ class LogInView: UIViewController, UITextFieldDelegate {
 //                            width: size.width,
 //                            height: size.width * 0.428)
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.image = UIImage(named: "size.width")
+        view.image = UIImage(named: "logo")
         
         
         return view
@@ -44,7 +44,7 @@ class LogInView: UIViewController, UITextFieldDelegate {
         let label = UILabel()
         label.text = "*неверный формат"
         label.numberOfLines = 0
-        label.textColor = .customOrange
+        label.textColor = .red
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isHidden = true
         return label
@@ -64,7 +64,7 @@ class LogInView: UIViewController, UITextFieldDelegate {
         let label = UILabel()
         label.text = "*неверный формат"
         label.numberOfLines = 0
-        label.textColor = .customOrange
+        label.textColor = .red
         label.translatesAutoresizingMaskIntoConstraints = false
         label.isHidden = true
         return label
@@ -173,7 +173,7 @@ private extension LogInView{
     }
     
     @objc func forgetPasswordAction(_ sender: UIButton) {
-        print("Here will be something action...\nMaybe:)")
+        navigationController?.pushViewController(ForgetPasswordView(), animated: true)
     }
     
     @objc func enterButtonAction(_ sender: UIButton) {
